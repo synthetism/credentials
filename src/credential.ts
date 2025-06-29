@@ -63,23 +63,18 @@ export interface BaseCredentialSubject {
 
 // Identity types
 
-export interface BaseIdentitySubject extends BaseCredentialSubject { 
+export interface IdentitySubject extends BaseCredentialSubject { 
   issuedBy: SynetHolder 
   scope?: string[];  // optional: claim purpose or restriction
 }
 
-
-export interface IdentitySubject extends BaseIdentitySubject { 
-
-}
-
-export interface RootIdentitySubject extends BaseIdentitySubject {
+export interface RootIdentitySubject extends IdentitySubject {
   networkId: string;
   poolCidr: string;   // The IP range operated by root
   url?: string;  // Optional URL for more info
 }
 
-export interface GatewayIdentitySubject extends BaseIdentitySubject {
+export interface GatewayIdentitySubject extends IdentitySubject {
   networkId: string;
   regionId?: string
   cidr?: string
@@ -200,8 +195,10 @@ export enum CredentialType {
   // Authorization
   Authorization = "AuthorizationCredential",
   GatewayAuthorization = "GatewayAuthorizationCredential",
-
+  IntelligenceAuthorization = "IntelligenceAuthorizationCredential",
+  
   // Assets
+  DataAsset = "DataAssetCredential",
   IpPool = "IpPoolAssetCredential",
   Ip = "IpAssetCredential",
 
