@@ -52,9 +52,7 @@ export interface CredentialDelegation {
   validFrom: string;       // Start date of delegation
   validUntil: string;      // End date of delegation
   [key: string]: unknown;   // Additional properties can be added as needed
-
 }
-
 
 export interface BaseCredentialSubject {
   holder: SynetHolder;
@@ -84,6 +82,7 @@ export interface GatewayIdentitySubject extends IdentitySubject {
 }
 
 // Authorization
+
 
 export interface AuthorizationSubject extends BaseCredentialSubject { 
   authorizedBy: SynetHolder // Who authorized the entity
@@ -130,9 +129,9 @@ export interface NonFungibleAssetSubject extends BaseAssetSubject {
 }
 
 export interface DataAssetSubject extends BaseAssetSubject {
- 
+  
+  licensedBy?: SynetHolder
   scope?: string[]; // Purpose of the data (e.g. "analytics", "storage", "training")
-  licensedBy?: SynetHolder | string; // Who owns or grants the license (optional)
 
 }
 
