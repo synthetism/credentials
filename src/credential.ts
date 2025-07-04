@@ -81,6 +81,16 @@ export interface GatewayIdentitySubject extends IdentitySubject {
   publicKeyHex?: string // optional, for rotation
 }
 
+export interface MarketIdentitySubject extends BaseGovernanceSubject {
+  marketId: string;             // Unique market ID
+  title: string;                // Human-readable name
+  description?: string;         // Optional, markdown or plain
+  ipfsUri?: string;             // Content or schema of the market
+  tags?: string[];              // For discovery
+  regionId?: string;            // Optional for geo/routing reasons
+  version?: string;             // Schema version, market rules, etc.
+}
+
 // Authorization
 
 
@@ -106,6 +116,7 @@ export interface GatewayAuthorizationSubject extends AuthorizationSubject {
   ipPoolId: string;
   validUntil?: string;
 }
+
 
 // Assets
  
@@ -146,6 +157,12 @@ export interface IpAssetSubject extends BaseAssetSubject {
   ip: string;
 }
 
+/** IIdeas for IP Allocation Delegation
+ *  IpAllocationDelegation
+ *  
+ */
+// 
+
 // Governance
 
 export interface BaseGovernanceSubject extends BaseCredentialSubject {
@@ -175,6 +192,17 @@ export interface NetworkDeclarationSubject extends BaseGovernanceSubject {
   topology?: string 
   rootUrl?: string      
 }
+
+
+
+export interface RoutingSubject extends BaseCredentialSubject {
+  ip: string // Synet IP
+  publicKey: string // WireGuard public key
+  endpoint: string // IP:port (or gateway relay ID)
+  networkId: string
+  issuedBy: SynetHolder // A trusted gateway or root
+}
+
 
 // Logic types
 
