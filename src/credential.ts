@@ -81,7 +81,7 @@ export interface GatewayIdentitySubject extends IdentitySubject {
   publicKeyHex?: string // optional, for rotation
 }
 
-export interface MarketIdentitySubject extends BaseGovernanceSubject {
+export interface MarketIdentitySubject extends GovernanceSubject {
   marketId: string;             // Unique market ID
   title: string;                // Human-readable name
   description?: string;         // Optional, markdown or plain
@@ -120,7 +120,7 @@ export interface GatewayAuthorizationSubject extends AuthorizationSubject {
 
 // Assets
  
-interface BaseAssetSubject extends BaseCredentialSubject {
+export interface AssetSubject extends BaseCredentialSubject {
   issuedBy: SynetHolder;
   delegated?: CredentialDelegation;
   parentAssetId?: string; 
@@ -129,30 +129,30 @@ interface BaseAssetSubject extends BaseCredentialSubject {
   verifiableResource?: VerifiableResource;
 }
 
-export interface FungibleAssetSubject extends BaseAssetSubject {
+export interface FungibleAssetSubject extends AssetSubject {
   quantity: number;
   totalSupply: number; // Total supply of the fungible asset
 }
 
-export interface NonFungibleAssetSubject extends BaseAssetSubject {
+export interface NonFungibleAssetSubject extends AssetSubject {
   uniqueIdentifier?: string; // Optional: Unique identifier for the non-fungible asset
 
 }
 
-export interface DataAssetSubject extends BaseAssetSubject {
+export interface DataAssetSubject extends AssetSubject {
   
   licensedBy?: SynetHolder
   scope?: string[]; // Purpose of the data (e.g. "analytics", "storage", "training")
 
 }
 
-export interface IpPoolAssetSubject extends BaseAssetSubject {
+export interface IpPoolAssetSubject extends AssetSubject {
   networkId: string;
   cidr: string
   regionId?: string // Enforcing region for the IP pool
 }
 
-export interface IpAssetSubject extends BaseAssetSubject {
+export interface IpAssetSubject extends AssetSubject {
   networkId: string;
   ip: string;
 }
@@ -165,24 +165,31 @@ export interface IpAssetSubject extends BaseAssetSubject {
 
 // Governance
 
-export interface BaseGovernanceSubject extends BaseCredentialSubject {
+export interface GovernanceSubject extends BaseCredentialSubject {
   issuedBy: SynetHolder; // Who issued the governance credential
   metadata?: Record<string, unknown>;
   schemaUri?: string;
   verifiableResource?: VerifiableResource;
 }
 
-export interface PolicySubject extends BaseGovernanceSubject {
+export interface PolicySubject extends GovernanceSubject {
   issuedBy: SynetHolder;      
 }
 
-export interface RootPolicySubject extends BaseGovernanceSubject {
+export interface RootPolicySubject extends GovernanceSubject {
   networkId: string;
   policyId: string
   version: string
 }
 
-export interface NetworkDeclarationSubject extends BaseGovernanceSubject {
+export interface DeclarationSubject extends BaseCredentialSubject {
+  issuedBy: SynetHolder; // Who issued the declaration
+  metadata?: Record<string, unknown>;
+  schemaUri?: string;
+  verifiableResource?: VerifiableResource;
+}
+
+export interface NetworkDeclarationSubject extends DeclarationSubject {
   networkId: string
   policyId: string
   ipv4?: string
